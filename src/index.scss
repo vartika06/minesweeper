@@ -1,0 +1,121 @@
+// TODO:
+// Use sass functions to optimise the redundant code
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.minesweeper {
+    background: #c2c2c2;
+    padding: 1rem;
+
+    border-style: solid;
+    border-width: 4px;
+    border-color: #fff #999 #999 #fff;
+}
+
+.header {
+    background: #c0c0c0;
+    padding: 10px 12px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #7b7b7b #fff #fff #7b7b7b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content {
+    margin-top: 1rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #7b7b7b #fff #fff #7b7b7b;
+    display: grid;
+    grid-template-rows: repeat(9, 1fr);
+    grid-template-columns: repeat(9, 1fr);
+}
+
+.display {
+    width: 5rem; //convert to rem
+    height: 3rem;
+    color: #ff0701;
+    background: black;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.status {
+    border-width: 2px;
+    border-style: solid;
+    border-color: #fff #7b7b7b #7b7b7b #fff;
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:active {
+        border-color: #7b7b7b #fff #fff #7b7b7b;
+    }
+}
+
+.cell {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #fff #7b7b7b #7b7b7b #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+
+    &:active {
+        border-color: #7b7b7b #fff #fff #7b7b7b;
+    }
+
+    &.revealed {
+        border-color: #7b7b7b;
+        border-width: 1px;
+    }
+
+    &.value-1 {
+        color: blue;
+    }
+    &.value-2 {
+        color: green;
+    }
+    &.value-3 {
+        color: red;
+    }
+    &.value-4 {
+        color: purple;
+    }
+    &.value-5 {
+        color: maroon;
+    }
+    &.value-6 {
+        color: turquoise;
+    }
+    &.value-7 {
+        color: black;
+    }
+    &.value-8 {
+        color: grey;
+    }
+}
