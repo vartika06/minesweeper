@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Cell } from "../../types";
 import { CELL_STATUS, CELL_VALUE } from "../../constants";
 
@@ -26,6 +24,8 @@ const SquareCell = ({
         <div
             className={`cell ${cell.status} value-${cell.value} ${isMineClick ? "red" : ""} `}
             data-testid={testId}
+            role="button"
+            tabIndex={0}
             onClick={() => handleCellClick(row, col)}
             onContextMenu={(event) => {
                 event.preventDefault();

@@ -182,9 +182,20 @@ const App = (): JSX.Element => {
                     and reveal all the safe cells.
                 </p>
             </div>
-            <div className="level-selector">
+            <div
+                className="level-selector"
+                role="radiogroup"
+                aria-label="Difficulty Level"
+            >
                 {Object.keys(LEVELS).map((level) => (
-                    <div key={level}>
+                    <div
+                        key={level}
+                        role="radio"
+                        aria-checked={
+                            selectedLevel ===
+                            LEVELS[level as keyof typeof LEVELS]
+                        }
+                    >
                         <input
                             type="radio"
                             id={level}
@@ -207,8 +218,8 @@ const App = (): JSX.Element => {
                     </div>
                 ))}
             </div>
-            <div className="minesweeper">
-                <div className="header">
+            <div className="minesweeper" tabIndex={0} role="grid">
+                <div className="header" role="row">
                     <Display testId="flags-display" value={totalFlags} />
                     <Status
                         status={status}
@@ -217,7 +228,7 @@ const App = (): JSX.Element => {
                     />
                     <Display testId="minesweeper-timer" value={timeElapsed} />
                 </div>
-                <div className="content" style={gridStyle}>
+                <div className="content" style={gridStyle} role="rowgroup">
                     <Grid
                         grid={grid}
                         testId="minesweeper-grid"
