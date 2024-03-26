@@ -1,5 +1,5 @@
-import { CELL_STATUS, CELL_VALUE, LEVELS } from "../constants";
-import { Cell } from "../types";
+import { CELL_STATUS, CELL_VALUE } from "../constants";
+import { Cell, Levels } from "../types";
 
 import getGrid, { getNeighbourCells } from "./grid";
 
@@ -115,12 +115,13 @@ export const flagAllMines = (grid: Cell[][]): Cell[][] => {
 export const handleFirstMineCell = (
     grid: Cell[][],
     row: number,
-    col: number
+    col: number,
+    level: Levels
 ): Cell[][] => {
     let newGrid = grid;
     let isMine = grid[row][col].value === CELL_VALUE.MINE;
     while (isMine) {
-        newGrid = getGrid(LEVELS.EASY);
+        newGrid = getGrid(level);
         isMine = newGrid[row][col].value === CELL_VALUE.MINE;
     }
     return newGrid;

@@ -10,7 +10,7 @@ import {
     STATUS_FACE,
     TIMER_INTERVAL_IN_MS
 } from "../constants";
-import { Cell } from "../types";
+import { Cell, Levels } from "../types";
 import getGrid from "../utils/grid";
 import {
     checkIsGameWon,
@@ -28,14 +28,14 @@ const App = (): JSX.Element => {
     const [selectedLevel, setSelectedLevel] = useState<keyof typeof LEVELS>(
         LEVELS.EASY
     );
-    const [grid, setGrid] = useState<Cell[][]>(getGrid(LEVELS.EASY));
+    const [grid, setGrid] = useState<Cell[][]>(getGrid(selectedLevel));
     const [status, setStatus] = useState<keyof typeof STATUS_FACE>(
         GAME_STATUS.PLAYING
     );
     const [hasGameStarted, setHasGameStarted] = useState<boolean>(false);
     const [timeElapsed, setTimeElapsed] = useState<number>(0);
     const [totalFlags, setTotalFlags] = useState<number>(
-        CELL_COUNTS[LEVELS.EASY].MINES
+        CELL_COUNTS[selectedLevel].MINES
     );
     const [mineCoordinates, setMineCoordinates] = useState<
         [number, number] | null
@@ -73,7 +73,6 @@ const App = (): JSX.Element => {
     }, [hasGameStarted, timeElapsed]);
 
     const handleCellClick = (row: number, col: number): void => {
-        console.log("handleCellClick", status);
         if (isGameLost) {
             return;
         }
@@ -87,7 +86,7 @@ const App = (): JSX.Element => {
              * First click can't be a mine
              */
             if (currentCell.value === CELL_VALUE.MINE) {
-                newGrid = handleFirstMineCell(newGrid, row, col);
+                newGrid = handleFirstMineCell(newGrid, row, col, selectedLevel);
                 currentCell = newGrid[row][col];
             }
             setHasGameStarted(true);
@@ -120,8 +119,8 @@ const App = (): JSX.Element => {
          */
         const { isGameWon } = checkIsGameWon(
             newGrid,
-            CELL_COUNTS[LEVELS.EASY].MAX_ROWS,
-            CELL_COUNTS[LEVELS.EASY].MAX_COLS
+            CELL_COUNTS[selectedLevel].MAX_ROWS,
+            CELL_COUNTS[selectedLevel].MAX_COLS
         );
 
         if (isGameWon) {
@@ -131,8 +130,6 @@ const App = (): JSX.Element => {
         }
         setGrid(newGrid);
     };
-
-    console.log("status", status);
 
     const handleFlagClick = (row: number, col: number): void => {
         if (isGameLost) {
@@ -153,21 +150,38 @@ const App = (): JSX.Element => {
         setGrid(newGrid);
     };
 
-    const handleFaceClick = (): void => {
+    const handleResetGame = (resetLevel: Levels): void => {
         /**
          * Reset the entire game
          */
         setStatus(GAME_STATUS.PLAYING);
         setHasGameStarted(false);
         setTimeElapsed(0);
-        setGrid(getGrid(LEVELS.EASY));
-        setTotalFlags(CELL_COUNTS[LEVELS.EASY].MINES);
+        setGrid(getGrid(resetLevel));
+        setTotalFlags(CELL_COUNTS[resetLevel].MINES);
         setMineCoordinates(null);
         setIsGameLost(false);
     };
 
+    const { MAX_ROWS, MAX_COLS } = CELL_COUNTS[selectedLevel];
+
+    const gridStyle = {
+        display: "grid",
+        gridTemplateRows: `repeat(${MAX_ROWS}, 1fr)`,
+        gridTemplateColumns: `repeat(${MAX_COLS}, 1fr)`
+    };
+
     return (
-        <>
+        <div className="game-content">
+            <h1>Minesweeper</h1>
+            <div>
+                <p>
+                    Click on a cell to reveal what's underneath it. If you
+                    reveal a mine, you lose! Right-click to flag a cell you
+                    think contains a mine. Your goal is to flag all the mines
+                    and reveal all the safe cells.
+                </p>
+            </div>
             <div className="level-selector">
                 {Object.keys(LEVELS).map((level) => (
                     <div key={level}>
@@ -180,11 +194,14 @@ const App = (): JSX.Element => {
                                 selectedLevel ===
                                 LEVELS[level as keyof typeof LEVELS]
                             }
-                            onChange={() =>
+                            onChange={() => {
                                 setSelectedLevel(
                                     LEVELS[level as keyof typeof LEVELS]
-                                )
-                            }
+                                );
+                                handleResetGame(
+                                    LEVELS[level as keyof typeof LEVELS]
+                                );
+                            }}
                         />
                         <label htmlFor={level}>{level}</label>
                     </div>
@@ -195,12 +212,12 @@ const App = (): JSX.Element => {
                     <Display testId="flags-display" value={totalFlags} />
                     <Status
                         status={status}
-                        handleFaceClick={handleFaceClick}
+                        handleFaceClick={() => handleResetGame(selectedLevel)}
                         testId="face-status"
                     />
                     <Display testId="minesweeper-timer" value={timeElapsed} />
                 </div>
-                <div className="content">
+                <div className="content" style={gridStyle}>
                     <Grid
                         grid={grid}
                         testId="minesweeper-grid"
@@ -210,7 +227,7 @@ const App = (): JSX.Element => {
                     />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

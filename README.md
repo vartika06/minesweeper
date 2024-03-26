@@ -1,46 +1,58 @@
-# Getting Started with Create React App
+# Minesweeper
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Minesweeper! This is a React.js and TypeScript implementation of the classic Minesweeper game.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+-   [Introduction](#introduction)
 
-### `npm start`
+-   [Features](#features)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-   [Installation](#installation)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-   [Usage](#usage)
 
-### `npm test`
+## Introduction
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Minesweeper is a classic single-player puzzle game. The objective is to clear a rectangular board containing hidden mines without detonating any of them. Players reveal cells on the board to uncover numbers indicating how many adjacent cells contain mines. By using logic, players must strategically flag cells they believe contain mines and safely reveal the rest. The game ends when all non-mine cells are revealed (victory) or when a mine is accidentally revealed (defeat).
 
-### `npm run build`
+This project is a React.js implementation of Minesweeper, featuring a customizable game board depending on the difficulty level of the game, left-click and right-click mechanics for revealing and flagging cells, game end conditions, and more.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   Dynamic game board generation based on user selected levels.
+-   Random placement of mines on the board.
+-   Left-click functionality to reveal cells.
+-   Right-click functionality to flag cells.
+-   Counter for the number of remaining mines and timer.
+-   Game end conditions for victory or defeat.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation
 
-### `npm run eject`
+To run the Minesweeper game locally, follow these steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Clone this repository to your local machine:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+git clone https://github.com/vartika06/minesweeper.git
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. Navigate to the project directory:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+cd minesweeper
+```
 
-## Learn More
+3. Install dependencies using NPM:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+4. After installing the dependencies, you can start the development server to play the game:
+
+```bash
+npm start
+```
+
+This command will start the development server and open the Minesweeper game in your default web browser. If it doesn't open automatically, you can access the game by navigating to http://localhost:3000 in your browser.
