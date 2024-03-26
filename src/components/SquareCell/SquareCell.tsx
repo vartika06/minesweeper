@@ -7,14 +7,30 @@ interface SquareProps {
     row: number;
     col: number;
     cell: Cell;
+    handleCellClick: (row: number, col: number) => void;
+    handleFlagClick: (row: number, col: number) => void;
+    isMineClick?: boolean;
     testId: string;
 }
 
-const SquareCell = ({ testId, row, col, cell }: SquareProps): JSX.Element => {
+const SquareCell = ({
+    testId,
+    row,
+    col,
+    cell,
+    isMineClick = false,
+    handleCellClick,
+    handleFlagClick
+}: SquareProps): JSX.Element => {
     return (
         <div
-            className={`cell ${cell.status} value-${cell.value}`}
+            className={`cell ${cell.status} value-${cell.value} ${isMineClick ? "red" : ""} `}
             data-testid={testId}
+            onClick={() => handleCellClick(row, col)}
+            onContextMenu={(event) => {
+                event.preventDefault();
+                handleFlagClick(row, col);
+            }}
         >
             <CellStatus cell={cell} />
         </div>

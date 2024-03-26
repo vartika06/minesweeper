@@ -72,7 +72,7 @@ const getAdjacentMinesCount = (
                     bottomLeftCell,
                     bottomCell,
                     bottomRightCell
-                } = grabAdjacentCells(minedGrid, row, col);
+                } = getNeighbourCells(minedGrid, row, col);
 
                 const adjacentCells = [
                     topLeftCell,
@@ -100,7 +100,7 @@ const getAdjacentMinesCount = (
     return gridWithMineCounts;
 };
 
-const grabAdjacentCells = (
+export const getNeighbourCells = (
     cells: Cell[][],
     rowIndex: number,
     colIndex: number

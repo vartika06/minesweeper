@@ -1,3 +1,8 @@
 export const formatData = (data: number): string => {
-    return data.toString().padStart(3, "0");
+    /**
+     * Handle for negative values
+     */
+    return data >= 0
+        ? data.toString().padStart(3, "0")
+        : `-${Math.abs(data).toString().padStart(2, "0")}`;
 };

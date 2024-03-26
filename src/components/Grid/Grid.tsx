@@ -1,17 +1,21 @@
-import React, { useState } from "react";
-
-import getGrid from "../../utils/getGrid";
-import { LEVELS } from "../../constants";
 import SquareCell from "../SquareCell/SquareCell";
 import { Cell } from "../../types";
 
-const Grid = (): JSX.Element => {
-    const [grid, setGrid] = useState<Cell[][]>(getGrid(LEVELS.EASY));
+interface GridProps {
+    grid: Cell[][];
+    testId: string;
+    mineCoordinates: [number, number] | null;
+    handleCellClick: (row: number, col: number) => void;
+    handleFlagClick: (row: number, col: number) => void;
+}
 
-    return <GridCells grid={grid} />;
-};
-
-const GridCells = ({ grid }: { grid: Cell[][] }): JSX.Element => {
+const Grid = ({
+    grid,
+    testId,
+    mineCoordinates,
+    handleCellClick,
+    handleFlagClick
+}: GridProps): JSX.Element => {
     return (
         <>
             {grid.map((row, rowIndex) => {
@@ -21,7 +25,16 @@ const GridCells = ({ grid }: { grid: Cell[][] }): JSX.Element => {
                         row={rowIndex}
                         col={colIndex}
                         cell={cell}
-                        testId={`cell-${rowIndex}-${colIndex}`}
+                        isMineClick={
+                            !!(
+                                mineCoordinates &&
+                                mineCoordinates[0] === rowIndex &&
+                                mineCoordinates[1] === colIndex
+                            )
+                        }
+                        handleCellClick={handleCellClick}
+                        handleFlagClick={handleFlagClick}
+                        testId={`${testId}-cell-${rowIndex}-${colIndex}`}
                     />
                 ));
             })}
